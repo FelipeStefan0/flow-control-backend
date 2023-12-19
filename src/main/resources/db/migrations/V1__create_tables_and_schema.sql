@@ -9,6 +9,6 @@ create table if not exists actions.action (
     id serial primary key not null,
     types_action int not null references actions.types,
     value_action float not null,
-    date_action varchar not null,
+    date_action timestamp with time zone not null,
     notes varchar
 );
