@@ -2,16 +2,21 @@ package com.flowcontrolback.controller;
 
 import com.flowcontrolback.entities.Action;
 import com.flowcontrolback.services.ActionService;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @RequestMapping("/action")
-@RequiredArgsConstructor
 @RestController
 public class ActionController {
 
+    @Autowired
     private ActionService service;
 
     @GetMapping
