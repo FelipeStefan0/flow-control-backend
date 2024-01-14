@@ -16,16 +16,15 @@ public class Action {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "value_action", nullable = false)
-    private double value_action;
+    @Column(name = "amount", nullable = false)
+    private double amount;
 
-    @Column(name = "date_action", nullable = false, columnDefinition = "timestamp")
-    private LocalDateTime date_action;
+    @Column(name = "hours", nullable = false, columnDefinition = "timestamp")
+    private LocalDateTime hours;
 
     @Column(name = "notes")
     private String notes;
 
-    //@OneToMany(cascade = CascadeType.ALL)
-    //@JoinColumn(name = "types_action", nullable = false)
-    //private TypesActions types_actions;
+    @Column(name = "types", nullable = false)
+    private TypesActions types;
 }
