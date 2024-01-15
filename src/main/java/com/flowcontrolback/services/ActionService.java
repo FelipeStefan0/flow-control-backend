@@ -6,7 +6,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,4 +29,20 @@ public class ActionService {
         return response;
     }
 
+    public void delete(Long id) throws Exception {
+        Optional<Action> action = repository.findById(id);
+        if(action.isEmpty())
+            throw new Exception("O registro informado não existe!");
+        else {
+            repository.delete(action.get());
+        }
+    }
+
+    public Action edit(Action action) {
+        LocalDateTime hours = repository.findById(action.getId()).get().getHours();
+        action.setHours(hours);
+        Action response = action;
+        response = repository.save(action);
+        return response;
+    }
 }

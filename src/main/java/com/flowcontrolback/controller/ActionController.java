@@ -35,13 +35,19 @@ public class ActionController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Action> delete() {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<ApiResponse<Action>> delete(@RequestParam Long id) throws Exception {
+        ApiResponse<Action> response = new ApiResponse<>();
+        service.delete(id);
+        response.of(HttpStatus.OK, "Deletado com sucesso!");
+        return ResponseEntity.status(response.getStatus()).body(response);
     }
 
     @PutMapping
-    public ResponseEntity<Action> edit() {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<ApiResponse<Action>> edit(@RequestBody Action action) {
+        ApiResponse<Action> response = new ApiResponse<>();
+        Action actionChanged = service.edit(action);
+        response.of(HttpStatus.OK,"Resgistro modificado com sucesso!", actionChanged);
+        return ResponseEntity.status(response.getStatus()).body(response);
     }
 
 }
