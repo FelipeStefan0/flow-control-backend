@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RequestMapping("/action")
 @RestController
@@ -17,16 +19,19 @@ public class ActionController {
     private final ActionService service;
 
     @GetMapping
-    public ResponseEntity<Action> getAll() {
-        return ResponseEntity.ok().build();
+    public ResponseEntity<ApiResponse<List<Action>>> getAll() {
+        ApiResponse<List<Action>> response = new ApiResponse<>();
+        List<Action> listedAction = service.list();
+        response.of(HttpStatus.OK, "Listado com sucesso!", listedAction);
+        return ResponseEntity.status(response.getStatus()).body(response);
     }
 
     @PostMapping
     public ResponseEntity<ApiResponse<Action>> create(@RequestBody Action action) {
         ApiResponse<Action> response = new ApiResponse<>();
         Action createdAction = service.create(action);
-        response.of(HttpStatus.OK, "Entrada registrada com sucesso!", createdAction);
-        return ResponseEntity.status(response.getStatus()).body(response);""
+        response.of(HttpStatus.OK, "Registrado com sucesso!", createdAction);
+        return ResponseEntity.status(response.getStatus()).body(response);
     }
 
     @DeleteMapping
