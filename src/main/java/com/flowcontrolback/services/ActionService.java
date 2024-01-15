@@ -1,10 +1,9 @@
 package com.flowcontrolback.services;
 
 import com.flowcontrolback.entities.Action;
+import com.flowcontrolback.models.ApiResponse;
 import com.flowcontrolback.repositories.ActionRepository;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,16 +13,16 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 
 @Service
-@Data
+@RequiredArgsConstructor
 public class ActionService {
 
-    @Autowired
-    private ActionRepository repository;
+    private final ActionRepository repository;
 
-    public ResponseEntity<Action> create(Action action) {
+    public Action create(Action action) {
+        Action response = null;
         action.setHours(new Timestamp(System.currentTimeMillis()).toLocalDateTime());
-        Action response = repository.save(action);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        response = repository.save(action);
+        return response;
     }
 
 }

@@ -1,23 +1,20 @@
 package com.flowcontrolback.controller;
 
 import com.flowcontrolback.entities.Action;
+import com.flowcontrolback.models.ApiResponse;
 import com.flowcontrolback.services.ActionService;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
+@RequiredArgsConstructor
 @RequestMapping("/action")
 @RestController
 public class ActionController {
 
-    @Autowired
-    private ActionService service;
+    private final ActionService service;
 
     @GetMapping
     public ResponseEntity<Action> getAll() {
@@ -25,9 +22,11 @@ public class ActionController {
     }
 
     @PostMapping
-    public ResponseEntity<Action> create(@RequestBody Action action) {
-        ResponseEntity<Action> response = service.create(action);
-        return response;
+    public ResponseEntity<ApiResponse<Action>> create(@RequestBody Action action) {
+        ApiResponse<Action> response = new ApiResponse<>();
+        Action createdAction = service.create(action);
+        response.of(HttpStatus.OK, "Entrada registrada com sucesso!", createdAction);
+        return ResponseEntity.status(response.getStatus()).body(response);""
     }
 
     @DeleteMapping
