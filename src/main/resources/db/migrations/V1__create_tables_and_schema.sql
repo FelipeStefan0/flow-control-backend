@@ -7,7 +7,7 @@ create table if not exists actions.types (
 
 create table if not exists actions.action (
     id serial primary key not null,
-    types int not null references actions.types,
+    types int references actions.types,
     amount float not null,
     hours timestamp with time zone not null,
     notes varchar

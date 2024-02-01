@@ -25,6 +25,6 @@ public class Action {
     @Column(name = "notes")
     private String notes;
 
-    @Column(name = "types", nullable = false)
+    @Column(name = "types")
     private TypesActions types;
 }

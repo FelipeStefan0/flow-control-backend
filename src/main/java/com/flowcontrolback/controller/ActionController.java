@@ -4,7 +4,6 @@ import com.flowcontrolback.entities.Action;
 import com.flowcontrolback.models.ApiResponse;
 import com.flowcontrolback.services.ActionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/action")
 @RestController
-@CrossOrigin(origins = "http://localhost:8100")
+@CrossOrigin(
+        origins = {"http://192.168.0.100:8100", "http://localhost:8100"},
+        allowedHeaders = "*"
+)
 public class ActionController {
 
   private final ActionService service;
