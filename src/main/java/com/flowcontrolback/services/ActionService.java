@@ -30,12 +30,7 @@ public class ActionService {
     }
 
     public void delete(Long id) throws Exception {
-        Optional<Action> action = repository.findById(id);
-        if(action.isEmpty())
-            throw new Exception("O registro informado não existe!");
-        else {
-            repository.delete(action.get());
-        }
+        repository.deleteById(id);
     }
 
     public Action edit(Action action) {
