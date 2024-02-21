@@ -1,4 +1,4 @@
-package com.flowcontrolback.entities;
+package com.flowcontrolback.components.actions;
 
 import com.flowcontrolback.models.TypesActions;
 import jakarta.persistence.*;

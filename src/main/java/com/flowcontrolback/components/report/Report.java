@@ -1,4 +1,4 @@
-package com.flowcontrolback.entities;
+package com.flowcontrolback.report;
 
 import jakarta.persistence.*;
 import lombok.Data;

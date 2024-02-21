@@ -1,8 +1,6 @@
-package com.flowcontrolback.controller;
+package com.flowcontrolback.components.actions;
 
-import com.flowcontrolback.entities.Action;
 import com.flowcontrolback.models.ApiResponse;
-import com.flowcontrolback.services.ActionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +22,8 @@ public class ActionController {
   @GetMapping
   public ResponseEntity<ApiResponse<List<Action>>> getAll() {
     ApiResponse<List<Action>> response = new ApiResponse<>();
-    List<Action> listedAction = service.list();
-    response.of(HttpStatus.OK, "Listado com sucesso!", listedAction);
+    List<Action> actions = service.list();
+    response.of(HttpStatus.OK, "Listado com sucesso!", actions);
     return ResponseEntity.status(response.getStatus()).body(response);
   }
 

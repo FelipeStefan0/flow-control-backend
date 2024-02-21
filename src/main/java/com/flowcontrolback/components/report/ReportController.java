@@ -1,4 +1,4 @@
-package com.flowcontrolback.controller;
+package com.flowcontrolback.report;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;

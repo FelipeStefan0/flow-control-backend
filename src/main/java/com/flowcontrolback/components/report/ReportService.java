@@ -1,4 +1,4 @@
-package com.flowcontrolback.services;
+package com.flowcontrolback.report;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
