@@ -1,6 +1,8 @@
-package com.flowcontrolback.report;
+package com.flowcontrolback.components.report;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,7 +12,9 @@ import java.time.Year;
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "report", schema = "report")
+@Builder
 public class Report {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,11 +28,11 @@ public class Report {
     private Integer year;
 
     @Column(name = "total_value", nullable = false)
-    private Double totalValue;
+    private Double total_value;
 
     @Column(name = "in_total_value", nullable = false)
-    private Double inTotalValue;
+    private Double in_total_value;
 
     @Column(name = "out_total_value", nullable = false)
-    private Double outTotalValue;
+    private Double out_total_value;
 }
