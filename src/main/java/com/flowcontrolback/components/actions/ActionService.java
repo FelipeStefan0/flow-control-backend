@@ -18,7 +18,6 @@ public class ActionService {
 
     private final ActionRepository repository;
     private final ReportService reportService;
-    private final ReportRepository reportRepository;
 
     public List<Action> list() {
         List<Action> response = null;
@@ -31,11 +30,11 @@ public class ActionService {
 
         Integer year = action.getHours().getYear();
         Month month = action.getHours().getMonth();
-        if(repository.existsActionByHoursMonthAndHoursYear(month, year).isEmpty()) {
+        if(reportService.findByMonthAndYear(month, year).isEmpty()) {
             Report report = Report.builder()
                     .month(month)
                     .year(year)
-                    .total_value(action.getAmount())
+                    .total_value(0.0)
                     .build();
             if (action.getTypes() == TypesActions.IN) {
                 report.setIn_total_value(action.getAmount());
@@ -46,12 +45,11 @@ public class ActionService {
             }
             reportService.create(report);
         } else {
-            Report report = reportService.listByMonthAndYear(month, year).getData();
-            report.setTotal_value(report.getTotal_value() + action.getAmount());
+            Report report = reportService.findByMonthAndYear(month, year).get();
             if (action.getTypes() == TypesActions.IN) {
                 report.setIn_total_value(report.getIn_total_value() + action.getAmount());
             } else {
-                report.setOut_total_value(report.getOut_total_value() + action.getAmount());
+                report.setOut_total_value(report.getOut_total_value() - action.getAmount());
             }
             reportService.edit(report);
         }

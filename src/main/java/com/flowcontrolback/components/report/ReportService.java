@@ -19,19 +19,18 @@ public class ReportService {
         return repository.findAll();
     }
 
-    public ApiResponse<Report> listByMonthAndYear(Month month, Integer year) {
+    public Optional<Report> findByMonthAndYear(Month month, Integer year) {
         Optional<Report> report = repository.findByMonthAndYear(month, year);
-        if(report.isEmpty()) {
-            return new ApiResponse<Report>().of(HttpStatus.NOT_FOUND, "Nenhum relatório disponível.");
-        }
-        return new ApiResponse<Report>().of(HttpStatus.OK, "Relatório encontrado com sucesso.", report.get());
+        return report;
     }
 
     public Report create(Report report) {
+        report.setTotal_value(report.getIn_total_value() + report.getOut_total_value());
         return repository.save(report);
     }
 
     public Report edit(Report report) {
+        report.setTotal_value(report.getIn_total_value() + report.getOut_total_value());
         return repository.save(report);
     }
 
