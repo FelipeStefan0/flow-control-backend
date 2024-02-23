@@ -3,14 +3,17 @@ package com.flowcontrolback.components.actions;
 import com.flowcontrolback.components.report.Report;
 import com.flowcontrolback.components.report.ReportRepository;
 import com.flowcontrolback.components.report.ReportService;
+import com.flowcontrolback.models.Interval;
 import com.flowcontrolback.models.TypesActions;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -70,11 +73,21 @@ public class ActionService {
         repository.deleteById(id);
     }
 
-    public Action edit(Action action) {
+    public Action update(Action action) {
         LocalDateTime hours = repository.findById(action.getId()).get().getHours();
         action.setHours(hours);
         Action response = action;
         response = repository.save(action);
         return response;
+    }
+
+    public List<Action> getActionsByDateInterval(Interval interval) {
+        List<Action> allActions = repository.findAll();
+        List<Action> filteredActions;
+
+        filteredActions = allActions.stream().filter(action -> {
+             return !interval.getStart().isBefore(action.getHours()) || !interval.getStart().isAfter(action.getHours());
+        }).toList();
+        return filteredActions;
     }
 }

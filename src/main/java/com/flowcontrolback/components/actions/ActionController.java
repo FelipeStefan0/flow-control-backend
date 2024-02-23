@@ -1,6 +1,7 @@
 package com.flowcontrolback.components.actions;
 
 import com.flowcontrolback.models.ApiResponse;
+import com.flowcontrolback.models.Interval;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +21,19 @@ public class ActionController {
   private final ActionService service;
 
   @GetMapping
-  public ResponseEntity<ApiResponse<List<Action>>> getAll() {
+  public ResponseEntity<ApiResponse<List<Action>>> list() {
     ApiResponse<List<Action>> response = new ApiResponse<>();
     List<Action> actions = service.list();
     response.of(HttpStatus.OK, "Listado com sucesso!", actions);
     return ResponseEntity.status(response.getStatus()).body(response);
+  }
+
+  @GetMapping("/filter")
+  public ResponseEntity<ApiResponse<List<Action>>> listActionsByDateInterval(@RequestBody Interval interval) {
+    ApiResponse<List<Action>> response = new ApiResponse<>();
+    List<Action> actionsFiltered = service.getActionsByDateInterval(interval);
+    response.of(HttpStatus.OK, "Registros filtrados com sucesso!", actionsFiltered);
+    return  ResponseEntity.status(response.getStatus()).body(response);
   }
 
   @PostMapping
@@ -44,9 +53,9 @@ public class ActionController {
   }
 
   @PutMapping
-  public ResponseEntity<ApiResponse<Action>> edit(@RequestBody Action action) {
+  public ResponseEntity<ApiResponse<Action>> update(@RequestBody Action action) {
     ApiResponse<Action> response = new ApiResponse<>();
-    Action actionChanged = service.edit(action);
+    Action actionChanged = service.update(action);
     response.of(HttpStatus.OK, "Resgistro modificado com sucesso!", actionChanged);
     return ResponseEntity.status(response.getStatus()).body(response);
   }
