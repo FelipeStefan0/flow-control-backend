@@ -1,5 +1,7 @@
 package com.flowcontrolback.components.actions;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.flowcontrolback.components.report.Report;
 import com.flowcontrolback.models.TypesActions;
 import jakarta.persistence.*;
 import lombok.*;
@@ -27,4 +29,9 @@ public class Action {
 
     @Column(name = "types")
     private TypesActions types;
+
+    @ManyToOne(cascade = CascadeType.ALL, targetEntity = Report.class, optional = false)
+    @JoinColumn(name = "report_id", nullable = false)
+    @JsonIgnore
+    private Report report;
 }

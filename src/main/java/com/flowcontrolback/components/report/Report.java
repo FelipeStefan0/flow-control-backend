@@ -1,5 +1,6 @@
 package com.flowcontrolback.components.report;
 
+import com.flowcontrolback.components.actions.Action;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.Month;
 import java.time.Year;
+import java.util.List;
 
 @Entity
 @Data
@@ -35,4 +37,7 @@ public class Report {
 
     @Column(name = "out_total_value", nullable = false)
     private Double out_total_value;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "report", cascade = CascadeType.ALL)
+    private List<Action> actions;
 }

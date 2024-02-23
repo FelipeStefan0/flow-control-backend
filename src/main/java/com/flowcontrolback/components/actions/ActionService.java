@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,6 +31,7 @@ public class ActionService {
 
         Integer year = action.getHours().getYear();
         Month month = action.getHours().getMonth();
+        List<Action> actions = new ArrayList<>();
         if(reportService.findByMonthAndYear(month, year).isEmpty()) {
             Report report = Report.builder()
                     .month(month)
@@ -43,6 +45,7 @@ public class ActionService {
                 report.setOut_total_value(action.getAmount());
                 report.setIn_total_value(0.0);
             }
+            report.setActions(actions);
             reportService.create(report);
         } else {
             Report report = reportService.findByMonthAndYear(month, year).get();
@@ -51,8 +54,12 @@ public class ActionService {
             } else {
                 report.setOut_total_value(report.getOut_total_value() - action.getAmount());
             }
+            report.setActions(actions);
             reportService.edit(report);
         }
+
+        Report report = reportService.findByMonthAndYear(month, year).get();
+        action.setReport(report);
 
         Action response = null;
         response = repository.save(action);
