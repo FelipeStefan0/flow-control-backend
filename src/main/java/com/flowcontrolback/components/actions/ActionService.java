@@ -83,11 +83,12 @@ public class ActionService {
 
     public List<Action> getActionsByDateInterval(Interval interval) {
         List<Action> allActions = repository.findAll();
-        List<Action> filteredActions;
+        List<Action> filteredActions = null;
 
         filteredActions = allActions.stream().filter(action -> {
-             return !interval.getStart().isBefore(action.getHours()) || !interval.getStart().isAfter(action.getHours());
+            return action.getHours().isAfter(interval.getStart()) && action.getHours().isBefore(interval.getFinish());
         }).toList();
+
         return filteredActions;
     }
 }
