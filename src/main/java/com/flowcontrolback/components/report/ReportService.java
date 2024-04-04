@@ -25,12 +25,12 @@ public class ReportService {
     }
 
     public Report create(Report report) {
-        report.setTotal_value(report.getIn_total_value() + report.getOut_total_value());
+        report.setTotal_value(report.getIn_total_value() - report.getOut_total_value());
         return repository.save(report);
     }
 
     public Report edit(Report report) {
-        report.setTotal_value(report.getIn_total_value() + report.getOut_total_value());
+        report.setTotal_value(report.getIn_total_value() - report.getOut_total_value());
         return repository.save(report);
     }
 

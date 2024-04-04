@@ -13,6 +13,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/reports")
 @AllArgsConstructor
+@CrossOrigin("http://localhost:8100")
 public class ReportController {
 
     private final ReportService service;

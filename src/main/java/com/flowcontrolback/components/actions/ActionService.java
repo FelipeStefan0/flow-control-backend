@@ -55,7 +55,7 @@ public class ActionService {
             if (action.getTypes() == TypesActions.IN) {
                 report.setIn_total_value(report.getIn_total_value() + action.getAmount());
             } else {
-                report.setOut_total_value(report.getOut_total_value() - action.getAmount());
+                report.setOut_total_value(report.getOut_total_value() + action.getAmount());
             }
             report.setActions(actions);
             reportService.edit(report);
