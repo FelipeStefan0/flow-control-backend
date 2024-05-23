@@ -30,7 +30,7 @@ public class ActionService {
     }
     
     public Action create(Action action) {
-        action.setHours(new Timestamp(System.currentTimeMillis()).toLocalDateTime());
+        //action.setHours(new Timestamp(System.currentTimeMillis()).toLocalDateTime());
 
         Integer year = action.getHours().getYear();
         Month month = action.getHours().getMonth();
