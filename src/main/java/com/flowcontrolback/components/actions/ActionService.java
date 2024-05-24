@@ -3,10 +3,13 @@ package com.flowcontrolback.components.actions;
 import com.flowcontrolback.components.report.Report;
 import com.flowcontrolback.components.report.ReportRepository;
 import com.flowcontrolback.components.report.ReportService;
+import com.flowcontrolback.models.ApiResponse;
 import com.flowcontrolback.models.Interval;
 import com.flowcontrolback.models.TypesActions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cglib.core.Local;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -30,8 +33,6 @@ public class ActionService {
     }
     
     public Action create(Action action) {
-        //action.setHours(new Timestamp(System.currentTimeMillis()).toLocalDateTime());
-
         Integer year = action.getHours().getYear();
         Month month = action.getHours().getMonth();
         List<Action> actions = new ArrayList<>();
@@ -90,5 +91,19 @@ public class ActionService {
         }).toList();
 
         return filteredActions;
+    }
+
+    public ApiResponse<List<Action>> getByDay(ActionCriteria criteria) {
+        ApiResponse<List<Action>> response = new ApiResponse<>();
+        List<Action> filteredActions = repository.findAll(createSpecification(criteria));
+        return response.of(HttpStatus.OK, "Registros encontrados!", filteredActions);
+    }
+
+    private Specification<Action> createSpecification(ActionCriteria criteria) {
+        Specification<Action> specification = Specification.where(null);
+        if(criteria.getDate() != null) specification = specification.and(ActionCriteria.filterByDate(criteria.getDate()));
+        if(criteria.getMonth() != null) specification = specification.and(ActionCriteria.filterByMonth(criteria.getMonth()));
+        if(criteria.getYear() != null) specification = specification.and(ActionCriteria.filterByYear(criteria.getYear()));
+        return specification;
     }
 }

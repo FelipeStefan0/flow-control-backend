@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -28,12 +29,19 @@ public class ActionController {
     return ResponseEntity.status(response.getStatus()).body(response);
   }
 
-  @GetMapping("/filter")
-  public ResponseEntity<ApiResponse<List<Action>>> listActionsByDateInterval(@RequestBody Interval interval) {
+  @GetMapping("/filterByDateInterval")
+  public ResponseEntity<ApiResponse<List<Action>>> filterByDateInterval(@RequestBody Interval interval) {
     ApiResponse<List<Action>> response = new ApiResponse<>();
     List<Action> actionsFiltered = service.getActionsByDateInterval(interval);
     response.of(HttpStatus.OK, "Registros filtrados com sucesso!", actionsFiltered);
     return  ResponseEntity.status(response.getStatus()).body(response);
+  }
+
+  @GetMapping("/getByDate")
+  public ResponseEntity<ApiResponse<List<Action>>> getByDate(ActionCriteria criteria) {
+    ApiResponse<List<Action>> response = new ApiResponse<>();
+    response = service.getByDay(criteria);
+    return ResponseEntity.status(response.getStatus()).body(response);
   }
 
   @PostMapping
