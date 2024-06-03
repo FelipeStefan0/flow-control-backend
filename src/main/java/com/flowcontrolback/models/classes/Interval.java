@@ -1,4 +1,4 @@
-package com.flowcontrolback.models;
+package com.flowcontrolback.models.classes;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

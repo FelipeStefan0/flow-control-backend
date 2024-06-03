@@ -1,6 +1,6 @@
 package com.flowcontrolback.components.report;
 
-import com.flowcontrolback.models.ApiResponse;
+import com.flowcontrolback.models.classes.ApiResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

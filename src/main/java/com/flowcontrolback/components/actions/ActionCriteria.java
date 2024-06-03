@@ -13,7 +13,7 @@ public class ActionCriteria {
     public static Specification<Action> filterByDate(Integer date) {
         return ((root, query, criteriaBuilder) ->
                 criteriaBuilder.like(
-                        root.get("hours"), "%-" + date + "%"
+                        root.get("hours"), "%-" + date + " %"
                 ));
     }
 
@@ -27,7 +27,7 @@ public class ActionCriteria {
     public static Specification<Action> filterByYear(Integer year) {
         return ((root, query, criteriaBuilder) ->
                 criteriaBuilder.like(
-                        root.get("hours"), "%-" + year + "-%"
+                        root.get("hours"), "%" + year + "-%"
                 ));
     }
 }

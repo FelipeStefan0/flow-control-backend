@@ -1,4 +1,4 @@
-package com.flowcontrolback.models;
+package com.flowcontrolback.models.classes;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -2,7 +2,7 @@ package com.flowcontrolback.components.actions;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.flowcontrolback.components.report.Report;
-import com.flowcontrolback.models.TypesActions;
+import com.flowcontrolback.models.enums.TypesActions;
 import jakarta.persistence.*;
 import lombok.*;
 

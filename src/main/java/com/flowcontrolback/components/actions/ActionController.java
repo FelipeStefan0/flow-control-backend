@@ -1,13 +1,12 @@
 package com.flowcontrolback.components.actions;
 
-import com.flowcontrolback.models.ApiResponse;
-import com.flowcontrolback.models.Interval;
+import com.flowcontrolback.models.classes.ApiResponse;
+import com.flowcontrolback.models.classes.Interval;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor

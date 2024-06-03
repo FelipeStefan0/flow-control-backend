@@ -1,8 +1,6 @@
-package com.flowcontrolback.models;
+package com.flowcontrolback.models.enums;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 @Getter
 public enum TypesActions {

@@ -1,22 +1,18 @@
 package com.flowcontrolback.components.actions;
 
 import com.flowcontrolback.components.report.Report;
-import com.flowcontrolback.components.report.ReportRepository;
 import com.flowcontrolback.components.report.ReportService;
-import com.flowcontrolback.models.ApiResponse;
-import com.flowcontrolback.models.Interval;
-import com.flowcontrolback.models.TypesActions;
+import com.flowcontrolback.models.classes.ApiResponse;
+import com.flowcontrolback.models.classes.Interval;
+import com.flowcontrolback.models.enums.TypesActions;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cglib.core.Local;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
