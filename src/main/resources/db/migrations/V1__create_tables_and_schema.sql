@@ -9,8 +9,8 @@ create table if not exists model.types (
 
 create table if not exists actions.action (
     id serial primary key not null,
-    types int references model.types,
-    amount float not null,
-    hours timestamp with time zone not null,
-    notes varchar
+    type int references model.types,
+    value float not null,
+    date timestamp with time zone not null,
+    description varchar
 );

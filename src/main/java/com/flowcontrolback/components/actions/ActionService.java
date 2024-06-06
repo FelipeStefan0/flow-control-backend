@@ -29,8 +29,8 @@ public class ActionService {
     }
     
     public Action create(Action action) {
-        Integer year = action.getHours().getYear();
-        Month month = action.getHours().getMonth();
+        Integer year = action.getDate().getYear();
+        Month month = action.getDate().getMonth();
         List<Action> actions = new ArrayList<>();
         if(reportService.findByMonthAndYear(month, year).isEmpty()) {
             Report report = Report.builder()
@@ -38,21 +38,21 @@ public class ActionService {
                     .year(year)
                     .total_value(0.0)
                     .build();
-            if (action.getTypes() == TypesActions.IN) {
-                report.setIn_total_value(action.getAmount());
+            if (action.getType() == TypesActions.IN) {
+                report.setIn_total_value(action.getValue());
                 report.setOut_total_value(0.0);
             } else {
-                report.setOut_total_value(action.getAmount());
+                report.setOut_total_value(action.getValue());
                 report.setIn_total_value(0.0);
             }
             report.setActions(actions);
             reportService.create(report);
         } else {
             Report report = reportService.findByMonthAndYear(month, year).get();
-            if (action.getTypes() == TypesActions.IN) {
-                report.setIn_total_value(report.getIn_total_value() + action.getAmount());
+            if (action.getType() == TypesActions.IN) {
+                report.setIn_total_value(report.getIn_total_value() + action.getValue());
             } else {
-                report.setOut_total_value(report.getOut_total_value() + action.getAmount());
+                report.setOut_total_value(report.getOut_total_value() + action.getValue());
             }
             report.setActions(actions);
             reportService.edit(report);
@@ -71,8 +71,8 @@ public class ActionService {
     }
 
     public Action update(Action action) {
-        LocalDateTime hours = repository.findById(action.getId()).get().getHours();
-        action.setHours(hours);
+        LocalDateTime date = repository.findById(action.getId()).get().getDate();
+        action.setDate(date);
         Action response = action;
         response = repository.save(action);
         return response;
@@ -83,7 +83,7 @@ public class ActionService {
         List<Action> filteredActions = null;
 
         filteredActions = allActions.stream().filter(action -> {
-            return action.getHours().isAfter(interval.getStart()) && action.getHours().isBefore(interval.getFinish());
+            return action.getDate().isAfter(interval.getStart()) && action.getDate().isBefore(interval.getFinish());
         }).toList();
 
         return filteredActions;
@@ -97,7 +97,7 @@ public class ActionService {
 
     private Specification<Action> createSpecification(ActionCriteria criteria) {
         Specification<Action> specification = Specification.where(null);
-        if(criteria.getDate() != null) specification = specification.and(ActionCriteria.filterByDate(criteria.getDate()));
+        if(criteria.getDay() != null) specification = specification.and(ActionCriteria.filterByDate(criteria.getDay()));
         if(criteria.getMonth() != null) specification = specification.and(ActionCriteria.filterByMonth(criteria.getMonth()));
         if(criteria.getYear() != null) specification = specification.and(ActionCriteria.filterByYear(criteria.getYear()));
         return specification;

@@ -12,16 +12,12 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/actions")
 @RestController
-@CrossOrigin(
-        origins = {"http://192.168.0.100:8100", "http://localhost:8100"},
-        allowedHeaders = "*"
-)
 public class ActionController {
 
   private final ActionService service;
 
   @GetMapping
-  public ResponseEntity<ApiResponse<List<Action>>> list() {
+  public ResponseEntity<ApiResponse<List<Action>>> get() {
     ApiResponse<List<Action>> response = new ApiResponse<>();
     List<Action> actions = service.list();
     response.of(HttpStatus.OK, "Listado com sucesso!", actions);
@@ -29,7 +25,7 @@ public class ActionController {
   }
 
   @GetMapping("/filterByDateInterval")
-  public ResponseEntity<ApiResponse<List<Action>>> filterByDateInterval(@RequestBody Interval interval) {
+  public ResponseEntity<ApiResponse<List<Action>>> getByDateInterval(@RequestBody Interval interval) {
     ApiResponse<List<Action>> response = new ApiResponse<>();
     List<Action> actionsFiltered = service.getActionsByDateInterval(interval);
     response.of(HttpStatus.OK, "Registros filtrados com sucesso!", actionsFiltered);

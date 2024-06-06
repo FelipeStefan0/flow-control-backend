@@ -18,17 +18,17 @@ public class Action {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "amount", nullable = false)
-    private double amount;
+    @Column(name = "value", nullable = false)
+    private double value;
 
-    @Column(name = "hours", nullable = false, columnDefinition = "timestamp")
-    private LocalDateTime hours;
+    @Column(name = "date", nullable = false, columnDefinition = "timestamp")
+    private LocalDateTime date;
 
-    @Column(name = "notes")
-    private String notes;
+    @Column(name = "description")
+    private String description;
 
-    @Column(name = "types")
-    private TypesActions types;
+    @Column(name = "type")
+    private TypesActions type;
 
     @ManyToOne(cascade = CascadeType.ALL, targetEntity = Report.class, optional = false)
     @JoinColumn(name = "report_id", nullable = false)
