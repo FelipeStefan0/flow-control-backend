@@ -17,27 +17,20 @@ public class ActionController {
   private final ActionService service;
 
   @GetMapping
-  public ResponseEntity<ApiResponse<List<Action>>> get() {
+  public ResponseEntity<ApiResponse<List<Action>>> get(ActionCriteria criteria) {
     ApiResponse<List<Action>> response = new ApiResponse<>();
-    List<Action> actions = service.list();
+    List<Action> actions = service.list(criteria);
     response.of(HttpStatus.OK, "Listado com sucesso!", actions);
     return ResponseEntity.status(response.getStatus()).body(response);
   }
 
-  @GetMapping("/filterByDateInterval")
-  public ResponseEntity<ApiResponse<List<Action>>> getByDateInterval(@RequestBody Interval interval) {
-    ApiResponse<List<Action>> response = new ApiResponse<>();
-    List<Action> actionsFiltered = service.getActionsByDateInterval(interval);
-    response.of(HttpStatus.OK, "Registros filtrados com sucesso!", actionsFiltered);
-    return  ResponseEntity.status(response.getStatus()).body(response);
-  }
-
-  @GetMapping("/getByDate")
-  public ResponseEntity<ApiResponse<List<Action>>> getByDate(ActionCriteria criteria) {
-    ApiResponse<List<Action>> response = new ApiResponse<>();
-    response = service.getByDay(criteria);
-    return ResponseEntity.status(response.getStatus()).body(response);
-  }
+//  @GetMapping("/filterByDateInterval")
+//  public ResponseEntity<ApiResponse<List<Action>>> getByDateInterval(@RequestBody Interval interval) {
+//    ApiResponse<List<Action>> response = new ApiResponse<>();
+//    List<Action> actionsFiltered = service.getActionsByDateInterval(interval);
+//    response.of(HttpStatus.OK, "Registros filtrados com sucesso!", actionsFiltered);
+//    return  ResponseEntity.status(response.getStatus()).body(response);
+//  }
 
   @PostMapping
   public ResponseEntity<ApiResponse<Action>> create(@RequestBody Action action) {

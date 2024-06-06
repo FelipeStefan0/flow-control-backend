@@ -3,31 +3,17 @@ package com.flowcontrolback.components.actions;
 import lombok.Data;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.time.LocalDateTime;
+
 @Data
 public class ActionCriteria {
 
-    private Integer day;
-    private Integer month;
-    private Integer year;
+    private String date;
 
-    public static Specification<Action> filterByDate(Integer day) {
-        return ((root, query, criteriaBuilder) ->
-                criteriaBuilder.like(
-                        root.get("date"), "%-" + day + " %"
-                ));
-    }
-
-    public static Specification<Action> filterByMonth(Integer month) {
-        return ((root, query, criteriaBuilder) ->
-                criteriaBuilder.like(
-                        root.get("date"), "%-" + month+1 + "-%"
-                ));
-    }
-
-    public static Specification<Action> filterByYear(Integer year) {
-        return ((root, query, criteriaBuilder) ->
-                criteriaBuilder.like(
-                        root.get("date"), "%" + year + "-%"
-                ));
+    public static Specification<Action> filterByDate(String date) {
+        return (root, query, criteriaBuilder) ->
+                criteriaBuilder.between(
+                        root.get("date"), LocalDateTime.parse(date), LocalDateTime.parse(date).plusDays(1)
+                );
     }
 }

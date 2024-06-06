@@ -22,9 +22,9 @@ public class ActionService {
     private final ActionRepository repository;
     private final ReportService reportService;
 
-    public List<Action> list() {
+    public List<Action> list(ActionCriteria criteria) {
         List<Action> response = null;
-        response = repository.findAll();
+        response = repository.findAll(createSpecification(criteria));
         return response;
     }
     
@@ -97,9 +97,10 @@ public class ActionService {
 
     private Specification<Action> createSpecification(ActionCriteria criteria) {
         Specification<Action> specification = Specification.where(null);
-        if(criteria.getDay() != null) specification = specification.and(ActionCriteria.filterByDate(criteria.getDay()));
-        if(criteria.getMonth() != null) specification = specification.and(ActionCriteria.filterByMonth(criteria.getMonth()));
-        if(criteria.getYear() != null) specification = specification.and(ActionCriteria.filterByYear(criteria.getYear()));
+        if(criteria.getDate() != null) specification = specification.and(ActionCriteria.filterByDate(criteria.getDate()));
+//        if(criteria.getDay() != null) specification = specification.and(ActionCriteria.filterByDate(criteria.getDay()));
+//        if(criteria.getMonth() != null) specification = specification.and(ActionCriteria.filterByMonth(criteria.getMonth()));
+//        if(criteria.getYear() != null) specification = specification.and(ActionCriteria.filterByYear(criteria.getYear()));
         return specification;
     }
 }
