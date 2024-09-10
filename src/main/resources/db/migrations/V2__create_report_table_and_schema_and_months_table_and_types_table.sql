@@ -1,13 +1,11 @@
-create table if not exists model.months(
+create table if not exists months(
    id serial primary key not null,
    name varchar not null
 );
 
-create schema if not exists report;
-
-create table if not exists report.report(
+create table if not exists report(
     id serial primary key not null,
-    month integer not null references model.months,
+    month integer not null references months,
     year integer not null,
     total_value float not null,
     in_total_value float not null,

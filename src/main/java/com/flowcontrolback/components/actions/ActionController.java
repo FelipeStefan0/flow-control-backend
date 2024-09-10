@@ -20,7 +20,9 @@ public class ActionController {
   public ResponseEntity<ApiResponse<List<Action>>> get(ActionCriteria criteria) {
     ApiResponse<List<Action>> response = new ApiResponse<>();
     List<Action> actions = service.list(criteria);
-    response.of(HttpStatus.OK, "Listado com sucesso!", actions);
+    if(actions.isEmpty())
+      response.of(HttpStatus.NOT_FOUND, "Não ocorreu entradas ou saídas hoje");
+    else response.of(HttpStatus.OK, "Listado com sucesso!", actions);
     return ResponseEntity.status(response.getStatus()).body(response);
   }
 
@@ -40,18 +42,18 @@ public class ActionController {
     return ResponseEntity.status(response.getStatus()).body(response);
   }
 
-  @DeleteMapping
-  public ResponseEntity<ApiResponse<Action>> delete(@RequestParam Long id) throws Exception {
+  @DeleteMapping("/{id}")
+  public ResponseEntity<ApiResponse<Action>> delete(@PathVariable Long id) {
     ApiResponse<Action> response = new ApiResponse<>();
     service.delete(id);
     response.of(HttpStatus.OK, "Deletado com sucesso!");
     return ResponseEntity.status(response.getStatus()).body(response);
   }
 
-  @PutMapping
-  public ResponseEntity<ApiResponse<Action>> update(@RequestBody Action action) {
+  @PutMapping("/{id}")
+  public ResponseEntity<ApiResponse<Action>> update(@PathVariable Long id, @RequestBody Action action) {
     ApiResponse<Action> response = new ApiResponse<>();
-    Action actionChanged = service.update(action);
+    Action actionChanged = service.update(id, action);
     response.of(HttpStatus.OK, "Resgistro modificado com sucesso!", actionChanged);
     return ResponseEntity.status(response.getStatus()).body(response);
   }

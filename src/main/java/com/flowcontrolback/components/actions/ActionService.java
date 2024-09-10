@@ -13,7 +13,9 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -66,15 +68,38 @@ public class ActionService {
         return response;
     }
 
-    public void delete(Long id) throws Exception {
-        repository.deleteById(id);
+    public void delete(Long id) {
+        Optional<Action> foundAction;
+        Report report;
+        if (repository.findById(id).isPresent()) {
+            foundAction = repository.findById(id);
+            report = foundAction.get().getReport();
+
+            if(foundAction.get().getType() == TypesActions.IN) {
+                report.setTotal_value(report.getTotal_value() - foundAction.get().getValue());
+                report.setIn_total_value(report.getIn_total_value() - foundAction.get().getValue());
+            } else {
+                report.setTotal_value(report.getTotal_value() + foundAction.get().getValue());
+                report.setOut_total_value(report.getOut_total_value() - foundAction.get().getValue());
+            }
+
+            foundAction.get().getReport().getActions().remove(foundAction.get());
+            foundAction.get().setReport(null);
+            reportService.edit(report);
+            repository.deleteById(id);
+        }
+        else throw new RuntimeException("Id não encontrado!");
     }
 
-    public Action update(Action action) {
-        LocalDateTime date = repository.findById(action.getId()).get().getDate();
-        action.setDate(date);
+    public Action update(Long id, Action action) {
+        Optional<Action> currentAction = repository.findById(id);
         Action response = action;
-        response = repository.save(action);
+        LocalDateTime date;
+        if (currentAction.isPresent()) {
+            date = currentAction.get().getDate();
+            action.setDate(date);
+            response = repository.save(action);
+        }
         return response;
     }
 

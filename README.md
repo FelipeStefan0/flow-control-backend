@@ -7,4 +7,4 @@ In back, the technologies that has been used at the moment was Spring Boot v3
 ## To run
 To run this project, is necessary:
 
-`git clone https://github.com/FelipeStefan0/flow_control_frontend.git`
+`git clone https://github.com/FelipeStefan0/flow_control_backend.git`

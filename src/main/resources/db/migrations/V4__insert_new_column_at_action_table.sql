@@ -1,2 +1,2 @@
-alter table actions.action
-add report_id int not null references report.report;
+alter table actions
+add report_id int references report;

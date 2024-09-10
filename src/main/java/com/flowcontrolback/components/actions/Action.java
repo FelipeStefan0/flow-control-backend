@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "action", schema = "actions")
+@Table(name = "actions", schema = "public")
 public class Action {
 
     @Id
@@ -30,8 +30,8 @@ public class Action {
     @Column(name = "type")
     private TypesActions type;
 
-    @ManyToOne(cascade = CascadeType.ALL, targetEntity = Report.class, optional = false)
-    @JoinColumn(name = "report_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "report_id")
     @JsonIgnore
     private Report report;
 }
