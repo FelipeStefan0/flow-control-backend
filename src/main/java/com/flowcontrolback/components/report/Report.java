@@ -15,7 +15,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "report", schema = "public")
+@Table(name = "report", schema = "registers")
 @Builder
 public class Report {
 
