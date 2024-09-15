@@ -93,12 +93,34 @@ public class ActionService {
 
     public Action update(Long id, Action action) {
         Optional<Action> currentAction = repository.findById(id);
-        Action response = action;
-        LocalDateTime date;
+        Report report;
+        Action response = new Action();
         if (currentAction.isPresent()) {
-            date = currentAction.get().getDate();
-            action.setDate(date);
-            response = repository.save(action);
+            report = currentAction.get().getReport();
+
+//            if(!currentAction.get().getType().equals(action.getType())) {
+//                if (action.getType().equals(TypesActions.IN)) {
+//                    report.setIn_total_value(report.getIn_total_value() + action.getValue());
+//                    report.setOut_total_value(report.getOut_total_value() - currentAction.get().getValue());
+//                } else {
+//                    report.setOut_total_value(report.getIn_total_value() + action.getValue());
+//                    report.setIn_total_value(report.getOut_total_value() - currentAction.get().getValue());
+//                }
+//            } else {
+//                if (action.getType().equals(TypesActions.IN)) {
+//                    report.setIn_total_value(report.getIn_total_value() + action.getValue() - currentAction.get().getValue());
+//                } else {
+//                    report.setOut_total_value(report.getOut_total_value() + action.getValue() - currentAction.get().getValue());
+//                }
+//            }
+
+            currentAction.get().setValue(action.getValue());
+            currentAction.get().setDate(action.getDate());
+            currentAction.get().setDescription(action.getDescription());
+            currentAction.get().setType(action.getType());
+
+            reportService.edit(report);
+            response = repository.save(currentAction.get());
         }
         return response;
     }
