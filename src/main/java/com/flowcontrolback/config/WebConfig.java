@@ -9,15 +9,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
-    @Value("${flow.control.front.url}")
-    private String flowControlFrontUrl;
+//    @Value("${flow.control.front.url}")
+//    private String flowControlFrontUrl;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry
                 .addMapping("/**")
-                .allowedOrigins(flowControlFrontUrl)
-                .allowedMethods("*")
-                .allowCredentials(true);
+                .allowedOrigins("*")
+                .allowedMethods("*");
     }
 }
