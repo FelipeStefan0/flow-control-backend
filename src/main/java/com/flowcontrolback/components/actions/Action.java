@@ -18,16 +18,15 @@ public class Action {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "value", nullable = false)
+    @Column(nullable = false)
     private double value;
 
-    @Column(name = "date", nullable = false, columnDefinition = "timestamp")
+    @Column(nullable = false, columnDefinition = "timestamp")
     private LocalDateTime date;
 
-    @Column(name = "description")
     private String description;
 
-    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
     private TypesActions type;
 
     @ManyToOne(fetch = FetchType.EAGER)

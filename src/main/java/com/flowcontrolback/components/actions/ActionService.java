@@ -30,7 +30,7 @@ public class ActionService {
         return response;
     }
     
-    public Action create(Action action) {
+    public Action create(ActionDTO actionDTO) {
         Integer year = action.getDate().getYear();
         Month month = action.getDate().getMonth();
         List<Action> actions = new ArrayList<>();

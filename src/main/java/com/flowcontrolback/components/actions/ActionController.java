@@ -2,6 +2,7 @@ package com.flowcontrolback.components.actions;
 
 import com.flowcontrolback.models.classes.ApiResponse;
 import com.flowcontrolback.models.classes.Interval;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,9 +36,9 @@ public class ActionController {
 //  }
 
   @PostMapping
-  public ResponseEntity<ApiResponse<Action>> create(@RequestBody Action action) {
+  public ResponseEntity<ApiResponse<Action>> create(@Valid @RequestBody ActionDTO actionDTO) {
     ApiResponse<Action> response = new ApiResponse<>();
-    Action createdAction = service.create(action);
+    Action createdAction = service.create(actionDTO);
     response.of(HttpStatus.OK, "Registrado com sucesso!", createdAction);
     return ResponseEntity.status(response.getStatus()).body(response);
   }
